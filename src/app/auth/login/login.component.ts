@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AppState } from 'src/app/reducers';
+import { Store } from '@ngrx/store';
+import { AuthService } from '../services/auth.service';
+import { Login } from '../actions/auth.actions';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,24 +14,40 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   loginForm: FormGroup;
 
   users: any;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.loginForm = this.fb.group(
-      {
-        email: this.fb.control('', [Validators.required, Validators.email]),
-        password: this.fb.control('', [Validators.required, Validators.minLength(8)])
-      }
-    );
+    this.loginForm = this.fb.group({
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      password: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(8)
+      ])
+    });
   }
 
   onSubmit(form: FormGroup) {
     console.log(form);
+    this.authService
+      .login(form.value.email, form.value.password)
+      .pipe(
+        tap(user => {
+          this.store.dispatch(new Login({ user }));
+          this.router.navigateByUrl('/home');
+        })
+      )
+      .subscribe(
+        noop,
+        () => alert('login failed')
+      );
   }
-
 }

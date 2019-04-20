@@ -16,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { CustomSerializer } from './utils/router.serializer';
 import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/services/auth.guard';
 
 @NgModule({
   declarations: [

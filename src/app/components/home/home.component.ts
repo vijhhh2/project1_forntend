@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { Logout } from 'src/app/auth/actions/auth.actions';
+import { selectFirstName } from 'src/app/auth/selectors/auth.selector';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +13,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  firstName: Observable<string>;
+
+  constructor(private store: Store<AppState>, private router: Router) { }
 
   ngOnInit() {
+    this.firstName = this.store.pipe(
+      select(selectFirstName)
+    );
+  }
+
+  logOut() {
+    this.store.dispatch(new Logout());
+    this.router.navigateByUrl('/login');
   }
 
 }

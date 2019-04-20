@@ -8,6 +8,10 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { AppMaterialModule } from 'src/app/app-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from '../app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import * as fromAuth from './reducers/auth.reducer';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -19,11 +23,16 @@ import { AppRoutingModule } from '../app-routing.module';
     ReactiveFormsModule,
     AppMaterialModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forFeature('auth', fromAuth.reducer),
   ],
   exports: [
     LoginComponent,
     SignupComponent,
+    HttpClientModule,
+    AppMaterialModule,
+    FlexLayoutModule
   ]
 })
 export class AuthModule {
@@ -31,7 +40,8 @@ export class AuthModule {
     return {
       ngModule: AuthModule,
       providers: [
-        AuthService
+        AuthService,
+        AuthGuard,
       ]
     };
   }
