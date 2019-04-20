@@ -1,0 +1,51 @@
+<form
+  class="login-form"
+  fxLayout="column wrap"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit(loginForm)"
+>
+  <mat-card
+    class="login__card"
+    fxLayout="column wrap"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+    <h2 class="login__text">Login</h2>
+    <mat-form-field class="login-full-width">
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-error *ngIf="loginForm.get('email').hasError('required')"
+        >Please Enter your email</mat-error
+      >
+      <mat-error *ngIf="loginForm.get('email').hasError('email')"
+        >Please Enter a valid email</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="login-full-width">
+      <input matInput placeholder="Password" formControlName="password" #pass />
+      <mat-error *ngIf="loginForm.get('password').hasError('required')"
+        >Please Enter your password</mat-error
+      >
+      <mat-error *ngIf="loginForm.get('password').hasError('minlength')"
+        >Please Enter a valid password</mat-error
+      >
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Login
+    </button>
+
+    <h5>
+      New user please. <a [routerLink]="['/signup']" routerLinkActive="router-link-active" >click here to Register</a>
+      <!-- <a routerLink="/signup">Signup</a> -->
+    </h5>
+  </mat-card>
+</form>
+

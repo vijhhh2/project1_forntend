@@ -1,0 +1,78 @@
+<form
+  class="signup-form"
+  (ngSubmit)="onSubmit(signupForm)"
+  fxLayout="column wrap"
+  fxLayoutAlign="center center"
+  [formGroup]="signupForm"
+  >
+  <mat-card
+    class="signup__card"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+    <h2 class="signup__text">
+      Please enter your valid details
+    </h2>
+    <div fxLayout="row wrap" fxLayoutGap="10px">
+      <mat-form-field class="signup-half-width">
+        <input matInput placeholder="First Name" formControlName="firstName" />
+        <mat-error *ngIf="signupForm.get('email').hasError('required')"
+          >Please Enter your First Name</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="signup-half-width">
+        <input matInput placeholder="Last Name" formControlName="lastName" />
+        <mat-error *ngIf="signupForm.get('email').hasError('required')"
+          >Please Enter your Last Name</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <mat-form-field class="signup-full-width">
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-error *ngIf="signupForm.get('email').hasError('required')"
+        >Please Enter your email</mat-error
+      >
+      <mat-error *ngIf="signupForm.get('email').hasError('email')"
+        >Please Enter a valid email</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="signup-full-width">
+      <input matInput placeholder="Password" formControlName="password" #pass />
+      <mat-error *ngIf="signupForm.get('password').hasError('required')"
+        >Please Enter your password</mat-error
+      >
+      <mat-error *ngIf="signupForm.get('password').hasError('minlength')"
+        >Please Enter a valid password</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field class="signup-full-width">
+      <input
+        matInput
+        placeholder="Confirm Password"
+        formControlName="confirmPassword"
+        #pass
+      />
+      <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')"
+        >Please Enter your password</mat-error
+      >
+      <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')"
+        >Please Enter Same password as above</mat-error
+      >
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="signupForm.invalid"
+    >
+      SignUp
+    </button>
+
+    <h5>
+      Already a user. <a [routerLink]="['/login']" routerLinkActive="router-link-active" >click here to Login</a>
+    </h5>
+  </mat-card>
+</form>
