@@ -16,7 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { CustomSerializer } from './utils/router.serializer';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './auth/services/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './shared/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuard } from './auth/services/auth.guard';
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
-    {provide: RouterStateSerializer, useClass: CustomSerializer}
+    {provide: RouterStateSerializer, useClass: CustomSerializer},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

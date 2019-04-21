@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { User } from 'src/app/models/user.model';
 import { AuthActionTypes, AuthActions } from '../actions/auth.actions';
 
@@ -10,7 +9,7 @@ user: User;
 
 export const initialState: AuthState = {
   isLogged: false,
-  user: null
+  user: null,
 };
 
 export function reducer(state = initialState, action: AuthActions): AuthState {
@@ -29,6 +28,18 @@ export function reducer(state = initialState, action: AuthActions): AuthState {
         isLogged: false,
         user: null
       };
+    case AuthActionTypes.SignupSuccess:
+    return {
+      ...state,
+      isLogged: true,
+      user: action.payload.user,
+    };
+    case AuthActionTypes.SignupFailed:
+    return {
+      ...state,
+      isLogged: false,
+      user: null,
+    };
 
     default:
       return state;

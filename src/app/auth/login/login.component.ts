@@ -4,9 +4,9 @@ import { AppState } from 'src/app/reducers';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../services/auth.service';
 import { Login } from '../actions/auth.actions';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { noop } from 'rxjs';
+import { noop, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -43,11 +43,12 @@ export class LoginComponent implements OnInit {
         tap(user => {
           this.store.dispatch(new Login({ user }));
           this.router.navigateByUrl('/home');
+        }),
+        catchError(err => {
+          console.log(err);
+          return throwError(err);
         })
       )
-      .subscribe(
-        noop,
-        () => alert('login failed')
-      );
+      .subscribe();
   }
 }

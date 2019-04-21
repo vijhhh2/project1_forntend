@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   logOut() {
     this.store.dispatch(new Logout());
-    this.router.navigateByUrl('/login');
   }
 
 }

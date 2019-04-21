@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers/auth.reducer';
 import { AuthGuard } from './services/auth.guard';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './effects/auth.effects';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { AuthGuard } from './services/auth.guard';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forFeature('auth', fromAuth.reducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   exports: [
     LoginComponent,

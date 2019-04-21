@@ -1,7 +1,6 @@
-export interface User {
-  id: string;
+export interface UserSignup {
   firstName: string;
   lastName: string;
   email: string;
-  token: string;
+  password: string;
 }

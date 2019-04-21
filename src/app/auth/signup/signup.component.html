@@ -33,6 +33,9 @@
       <mat-error *ngIf="signupForm.get('email').hasError('required')"
         >Please Enter your email</mat-error
       >
+      <mat-error *ngIf="signupForm.get('email').hasError('emailTaken')"
+        >User already register please login</mat-error
+      >
       <mat-error *ngIf="signupForm.get('email').hasError('email')"
         >Please Enter a valid email</mat-error
       >
