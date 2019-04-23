@@ -8,6 +8,8 @@ export enum AuthActionTypes {
   SignupRequest = '[Signup] Signup Request',
   SignupSuccess = '[Signup] Signup Success',
   SignupFailed = '[Signup] Signup Failed',
+  SaveUserRequest = '[Settings] Save User Request Action',
+  SaveUserSuccess = '[Settings] Save User Success Action',
 }
 
 export class Login implements Action {
@@ -36,10 +38,24 @@ export class SignupFailed implements Action {
   readonly type = AuthActionTypes.SignupFailed;
 }
 
+export class SaveUserRequest implements Action {
+  readonly type = AuthActionTypes.SaveUserRequest;
+
+  constructor(public payload: {user: User}) {}
+}
+
+export class SaveUserSuccess implements Action {
+  readonly type = AuthActionTypes.SaveUserSuccess;
+
+  constructor(public payload: {user: User}) {}
+}
+
 
 export type AuthActions =
 | Login
 | Logout
 | SignupRequest
 | SignupSuccess
-| SignupFailed;
+| SignupFailed
+| SaveUserRequest
+| SaveUserSuccess;

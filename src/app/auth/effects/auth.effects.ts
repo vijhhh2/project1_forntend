@@ -6,7 +6,8 @@ import {
   Logout,
   SignupRequest,
   SignupSuccess,
-  SignupFailed
+  SignupFailed,
+  SaveUserSuccess
 } from '../actions/auth.actions';
 import { tap, mergeMap, map, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -14,6 +15,8 @@ import { defer, of, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { AuthService } from '../services/auth.service';
+import { SaveUserRequest } from '../../auth/actions/auth.actions';
+import { User } from 'src/app/models/user.model';
 
 @Injectable()
 export class AuthEffects {
@@ -47,7 +50,7 @@ export class AuthEffects {
         }),
         map(user => new SignupSuccess({ user })),
         tap(user => {
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
           return user;
         }),
         catchError(err => {
@@ -56,6 +59,31 @@ export class AuthEffects {
         })
       );
     })
+  );
+
+  @Effect()
+  saveUser$ = this.actions$.pipe(
+    ofType<SaveUserRequest>(AuthActionTypes.SaveUserRequest),
+    mergeMap(action => {
+      return this.authService.saveUserProfile(action.payload.user)
+      .pipe(
+        catchError(err => throwError(err))
+      );
+    }),
+    map(data => {
+      console.log(data);
+      const oldUserData: User = JSON.parse(localStorage.getItem('user'));
+      const newUserData: User = {
+        ...oldUserData,
+        firstName: data.newUser.firstName,
+        lastName: data.newUser.lastName,
+        email: data.newUser.email
+      };
+      localStorage.setItem('user', JSON.stringify(newUserData));
+      return data.newUser;
+    }),
+    map(user => new SaveUserSuccess({user}))
+
   );
 
   @Effect()

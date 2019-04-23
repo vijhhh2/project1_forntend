@@ -1,0 +1,18 @@
+<mat-toolbar color="accent" class="toolbar">
+  <mat-toolbar-row fxLayout="row wrap" fxLayoutGap="10px">
+    <i class="fas fa-bars ham_menu" (click)="sideNav.toggle()"></i>
+    <span>Welcome Back {{ name | async }}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sideNav mode="side" disableClose="false" fixedInViewport="true" fixedTopGap="63">
+    <mat-nav-list fxLayout="column wrap" fxLayoutGap="10px">
+      <button mat-button matListItem (click)="navigateToHome()" fxFlex>Home</button>
+      <button mat-button matListItem fxFlex (click)="navigateToSettings()">Settings</button>
+      <button mat-button matListItem (click)="logout()" fxFlex>Logout</button>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

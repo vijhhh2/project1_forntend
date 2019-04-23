@@ -34,8 +34,7 @@ import { AuthEffects } from './effects/auth.effects';
     LoginComponent,
     SignupComponent,
     HttpClientModule,
-    AppMaterialModule,
-    FlexLayoutModule
+
   ]
 })
 export class AuthModule {

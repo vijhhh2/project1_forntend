@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap(user => {
           this.store.dispatch(new Login({ user }));
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
         }),
         catchError(err => {
           console.log(err);

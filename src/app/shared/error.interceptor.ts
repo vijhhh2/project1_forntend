@@ -17,6 +17,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (err instanceof HttpErrorResponse) {
           this.snackBar.open(err.error.message, 'ok', {duration: 5000});
         }
+        if (err.statusText === 'Unauthorized') {
+          this.snackBar.open('Please login', 'ok', {duration: 5000});
+        }
         const error = err.error.message || err.statusText;
         return throwError(error);
       })

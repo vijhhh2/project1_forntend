@@ -13,8 +13,12 @@ import {
   MatSelectModule,
   MatOptionModule,
   MatSlideToggleModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatGridListModule,
+  MatSidenavModule,
+  MatListModule
 } from '@angular/material';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   imports: [
@@ -31,7 +35,11 @@ import {
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   exports: [
     MatInputModule,
@@ -47,7 +55,11 @@ import {
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class AppMaterialModule {}

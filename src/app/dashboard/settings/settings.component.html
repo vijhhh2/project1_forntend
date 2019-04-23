@@ -1,9 +1,9 @@
 <form
   class="signup-form"
-  (ngSubmit)="onSubmit(signupForm)"
+  (ngSubmit)="onSubmit(saveUserForm)"
   fxLayout="column wrap"
   fxLayoutAlign="center center"
-  [formGroup]="signupForm"
+  [formGroup]="saveUserForm"
   >
   <mat-card
     class="signup__card"
@@ -12,41 +12,41 @@
     fxLayoutGap="10px"
   >
     <h2 class="signup__text">
-      Please enter your valid details
+      Please Update details
     </h2>
     <div fxLayout="row wrap" fxLayoutGap="10px">
       <mat-form-field class="signup-half-width">
-        <input matInput placeholder="First Name" formControlName="firstName" />
-        <mat-error *ngIf="signupForm.get('email').hasError('required')"
+        <input matInput placeholder="First Name" formControlName="firstName"/>
+        <mat-error *ngIf="saveUserForm.get('email').hasError('required')"
           >Please Enter your First Name</mat-error
         >
       </mat-form-field>
       <mat-form-field class="signup-half-width">
         <input matInput placeholder="Last Name" formControlName="lastName" />
-        <mat-error *ngIf="signupForm.get('email').hasError('required')"
+        <mat-error *ngIf="saveUserForm.get('email').hasError('required')"
           >Please Enter your Last Name</mat-error
         >
       </mat-form-field>
     </div>
     <mat-form-field class="signup-full-width">
       <input matInput placeholder="Email" formControlName="email" />
-      <mat-error *ngIf="signupForm.get('email').hasError('required')"
+      <mat-error *ngIf="saveUserForm.get('email').hasError('required')"
         >Please Enter your email</mat-error
       >
-      <mat-error *ngIf="signupForm.get('email').hasError('emailTaken')"
+      <mat-error *ngIf="saveUserForm.get('email').hasError('emailTaken')"
         >User already register please login</mat-error
       >
-      <mat-error *ngIf="signupForm.get('email').hasError('email')"
+      <mat-error *ngIf="saveUserForm.get('email').hasError('email')"
         >Please Enter a valid email</mat-error
       >
     </mat-form-field>
 
     <mat-form-field class="signup-full-width">
-      <input matInput placeholder="Password" formControlName="password" #pass />
-      <mat-error *ngIf="signupForm.get('password').hasError('required')"
+      <input matInput placeholder="Password" formControlName="password"/>
+      <mat-error *ngIf="saveUserForm.get('password').hasError('required')"
         >Please Enter your password</mat-error
       >
-      <mat-error *ngIf="signupForm.get('password').hasError('minlength')"
+      <mat-error *ngIf="saveUserForm.get('password').hasError('minlength')"
         >Please Enter a valid password</mat-error
       >
     </mat-form-field>
@@ -55,12 +55,11 @@
         matInput
         placeholder="Confirm Password"
         formControlName="confirmPassword"
-        #pass
       />
-      <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')"
+      <mat-error *ngIf="saveUserForm.get('confirmPassword').hasError('required')"
         >Please Enter your password</mat-error
       >
-      <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')"
+      <mat-error *ngIf="saveUserForm.get('confirmPassword').hasError('minlength')"
         >Please Enter Same password as above</mat-error
       >
     </mat-form-field>
@@ -69,13 +68,9 @@
       mat-raised-button
       color="accent"
       type="submit"
-      [disabled]="!signupForm.valid"
+      [disabled]="!saveUserForm.valid"
     >
-      SignUp
+      {{ (loading$ | async )? 'updating...' : 'save'}}
     </button>
-
-    <h5>
-      Already a user. <a [routerLink]="['/login']" routerLinkActive="router-link-active" >click here to Login</a>
-    </h5>
   </mat-card>
 </form>

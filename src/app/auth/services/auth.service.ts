@@ -29,7 +29,21 @@ export class AuthService {
 
   checkEmailIsTaken(email: string) {
     console.log('auth service');
-    const email1 = {email};
-    return this.http.post<boolean>(this.url + 'validEmail', email1);
+
+    return this.http.post<boolean>(this.url + 'validEmail', {email});
+  }
+  saveUserProfile(user: User) {
+    if (user.password.length > 0) {
+      return this.http.post<{message: string, newUser: User}>(this.url + 'saveUserPassword', user);
+    } else {
+      const newUser: User = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      };
+      console.log(newUser);
+      return this.http.post<{message: string, newUser: User}>(this.url + 'saveUser', newUser);
+    }
   }
 }

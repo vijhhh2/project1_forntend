@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { HomeComponent } from './components/home/home.component';
 
 // ngrx store
 import { StoreModule } from '@ngrx/store';
@@ -18,17 +17,23 @@ import { CustomSerializer } from './utils/router.serializer';
 import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './shared/error.interceptor';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { AppMaterialModule } from './app-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { JwtInterceptor } from './shared/jwt.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AppMaterialModule,
+    FlexLayoutModule,
     AuthModule.forRoot(),
+    DashboardModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
@@ -36,7 +41,8 @@ import { ErrorInterceptor } from './shared/error.interceptor';
   ],
   providers: [
     {provide: RouterStateSerializer, useClass: CustomSerializer},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
